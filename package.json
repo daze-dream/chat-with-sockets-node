@@ -11,7 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/bad-words": "^3.0.1",
     "@types/socket.io": "^3.0.2",
+    "bad-words": "^3.0.4",
     "express": "^4.17.1",
     "socket.io": "^4.2.0"
   },

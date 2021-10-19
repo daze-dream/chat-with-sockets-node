@@ -1,6 +1,7 @@
 const express = require ('express')
 const http = require('http')
 const path = require('path')
+const Filter = require('bad-words')
 
 const socketio = require('socket.io')
 //------------------------------
@@ -16,6 +17,7 @@ const io = socketio(server)
  * in a nutshell:
  * server(emit) -> client(receive) - countUpdated
  * client(emit) -> server(receive) - increment
+ * acknowledgements send back something to the emitter to indicate successful delivery
  */
 
 
@@ -27,11 +29,17 @@ io.on('connection', (socket) => {
     const welcomeMessage = 'WELCOME TO THE DUNES'
 
     socket.emit('message', welcomeMessage)
-    socket.on('sent', (message) => {
+    socket.on('sent', (message, callback) => {
+        const filter = new Filter()
+        if(filter.isProfane(message))
+            return callback('ey no cussin round these parts')
         io.emit('message', message)
+        //we can provide as many arguments as we want back to the client callback.
+        callback();
     })
-    socket.on('location_shared', (coords) => {
+    socket.on('location_shared', (coords, callback) => {
         console.log('user lat: ' + coords.lat + ' long: ' + coords.long)
+        callback('location shared successfully')
         io.emit('message',`https://www.google.com/maps?q=${coords.lat},${coords.long}`)
     })
     /**

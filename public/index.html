@@ -3,11 +3,15 @@
     <head>
         <script src="/socket.io/socket.io.js"></script>
         <script src="./js/chat.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>  
     </head>
     <body>
         <div>
-            <p1>CATS</p1>
+            <h1>CATS</h1>
         </div>
+        <div id="chatlog"></div>
         <div>
             <form id="chat">
                 <input name ="messagebox" placeholder="type a message">
@@ -15,7 +19,11 @@
             </form>
             <button id="sharelocation">Share location</button>
         </div>
-
+        <script id="message-template" type="text/html">
+            <div> 
+                <p>{{message}}</p>
+            </div>
+        </script>
 
     </body>
 </html>
