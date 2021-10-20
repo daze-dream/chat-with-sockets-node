@@ -21,7 +21,12 @@
         </div>
         <script id="message-template" type="text/html">
             <div> 
-                <p>{{message}}</p>
+                <p>({{timestamp}}): {{message}}</p>
+            </div>
+        </script>
+        <script id="location-template" type="text/html">
+            <div> 
+                <p>({{timestamp}}): <a href="{{location}}" target="_blank">user has shared their location</a> </p>
             </div>
         </script>
 

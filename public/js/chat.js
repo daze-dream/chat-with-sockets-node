@@ -7,14 +7,25 @@ const $chatText = $chatForm.querySelector('input')
 const $locationShareButton = document.querySelector('#sharelocation')
 const $chatlog = document.querySelector('#chatlog')
 const messageTemplate = document.querySelector('#message-template').innerHTML
+const locationTemplate = document.querySelector('#location-template').innerHTML
 
-socket.on('message', (incMessage)=> {
-    console.log(incMessage)
+socket.on('message', (messageObj)=> {
+    console.log(messageObj)
     const html = Mustache.render(messageTemplate, {
-        message: incMessage
+        message: messageObj.text,
+        timestamp: moment(messageObj.timestamp).format("MM-DD|hh:mm A")
     })
     $chatlog.insertAdjacentHTML('beforeend', html)
 })
+
+socket.on('locationMessageResponse', (urlObj) => {
+    console.log(urlObj)
+    const html = Mustache.render(locationTemplate, {
+        location: urlObj.text,
+        timestamp: moment(urlObj.timestamp).format("MM-DD|hh:mm A")
+    })
+    $chatlog.insertAdjacentHTML('beforeend', html)
+} )
 
 $chatForm.addEventListener('submit', (e)=> {
     e.preventDefault();
